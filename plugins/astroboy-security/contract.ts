@@ -8,6 +8,7 @@ export interface ICsrfOptions {
   saltLength: number;
   secretLength: number;
   maxAge: number;
+  domain: string | ((ctx: any) => string);
 }
 
 export interface IHstsOptions {

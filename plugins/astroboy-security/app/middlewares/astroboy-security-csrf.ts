@@ -48,13 +48,16 @@ const factory: MiddlewareFactory<Partial<ICsrfOptions>, any> = function(options 
     if (ctx.response.is('text/html')) {
       const secret = token.secretSync();
       const newToken = token.create(secret);
+      const domain = typeof options.domain === 'function' ? options.domain(ctx) : options.domain;
 
       ctx.cookies.set(options.csrfSecretName, secret, {
         maxAge: options.maxAge,
+        domain,
       });
       ctx.cookies.set(options.csrfTokenName, newToken, {
         maxAge: options.maxAge,
         httpOnly: false,
+        domain,
       });
     }
   };
